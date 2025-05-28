@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tour-Detail</title>
+</head>
+
+<body>
+  <h1>
+    <%= tour.title %>
+  </h1>
+  <p>
+    <%= tour.description %>
+  </p>
+  <h3>Available Packages</h3>
+  <ul>
+    <% tour.packages.forEach(pkg=> { %>
+      <li>
+        <strong>
+          <%= pkg.name %>
+        </strong> - <%= pkg.days %> - ₹<%= pkg.price %><br>
+            <em>
+              <%= pkg.details %>
+            </em>
+      </li>
+      <% }) %>
+  </ul>
+
+</body>
+
+</html>
