@@ -4,7 +4,7 @@ const path = require('path');
 const { default: mongoose } = require('mongoose');
 
 const {userrouter} = require('./router/userrouter');
-const tourRoutes = require('./router/tourRoutes');
+// const tourRoutes = require('./router/tourRoutes');
 const Newsletter  = require('./models/footeremailmodels');
 
 app.use(express.urlencoded({ extended: true })); // ✅ handles form submissions
@@ -15,15 +15,11 @@ app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
 app.use((req, res, next) => {
   console.log(`🚀 ${req.method} request for ${req.url}`);
   next();
 });
-
-//user router
-app.use(userrouter);
-//tour router
-app.use('/', tourRoutes);
 
 //footer email send
 app.post('/newsletter', async (req, res) => {
@@ -33,7 +29,8 @@ app.post('/newsletter', async (req, res) => {
     // Optional: check for existing email
     const exists = await Newsletter.findOne({ email });
     if (exists) {
-      return res.status(400).send("⚠️ This email is already subscribed.");
+      // return res.status(400).send("⚠️ This email is already subscribed.");
+      return res.redirect('/');
     }
 
     // Save to DB
@@ -47,6 +44,12 @@ app.post('/newsletter', async (req, res) => {
     res.status(500).send("Server error.");
   }
 });
+
+
+//user router
+app.use(userrouter);
+//tour router
+// app.use('/', tourRoutes);
 
 
 // database connection

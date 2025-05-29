@@ -1,7 +1,8 @@
-const Tour = require('../models/Tourmodel');
+const Tour = require('../models/indiaTourmodel');
 
 // Home page
 exports.getTour = async (req, res) => {
+  console.log('this is getour page');
   try {
     const tours = await Tour.find().lean();
     console.log("Tours fetched from DB:", tours);

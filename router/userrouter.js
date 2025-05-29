@@ -3,7 +3,7 @@ const userrouter = express.Router();
 const rootdir = require('../util/util');
 const path = require('path');
 
-const {getabout, gettrip, getblog, getcontact, postcontact, gethome} = require('../controller/usercontroller');
+const {getabout, gettrip, getblog, getcontact, postcontact, gethome, getTourBySlug} = require('../controller/usercontroller');
 
 userrouter.use((req,res,next) => {
   // console.log("first router",req.url,req.method);
@@ -25,5 +25,7 @@ userrouter.get("/contact", getcontact);
 userrouter.post("/contact", postcontact);
 
 userrouter.use("/", gethome);
+
+userrouter.use('/tours/:slug', getTourBySlug);
 
 exports.userrouter = userrouter;
