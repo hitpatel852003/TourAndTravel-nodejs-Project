@@ -24,8 +24,9 @@ userrouter.use("/blog", getblog);
 userrouter.get("/contact", getcontact);
 userrouter.post("/contact", postcontact);
 
-userrouter.use("/", gethome);
+userrouter.get("/", gethome);
+userrouter.get("/index", gethome);
 
-userrouter.use('/tours/:slug', getTourBySlug);
+userrouter.get('/tours/:slug', getTourBySlug);
 
 exports.userrouter = userrouter;

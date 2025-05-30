@@ -89,9 +89,12 @@ exports.getTourBySlug = async (req, res) => {
     const slug = req.params.slug;
     console.log("Fetching tour with slug:", slug);
     
-    const tour = await Tour.findOne({ slug }).lean();
-    if (!tour) return res.status(404).send('Tour not found');
-    res.render('tour', { tour });
+    const indiatour = await Tour.findOne({ slug }).lean();
+    const worldtours = await worldTour.findOne({ slug }).lean();
+
+    if (!indiatour && !worldtours) return res.status(404).send('Tour not found');
+    const tour = {...indiatour,...worldtours}
+    res.render('tour-detail', { tour });
   } catch (error) {
     console.error("Error fetching tour by slug:", err);
     res.status(500).send("Server Error");

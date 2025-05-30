@@ -10,6 +10,7 @@ const tourSchema = new mongoose.Schema({
       name: { type: String, required: true },
       days: { type: String, required: true },
       price: { type: Number, required: true },
+      image:{ type: String, required: true },
       details: { type: String, required: true }
     }
   ]
