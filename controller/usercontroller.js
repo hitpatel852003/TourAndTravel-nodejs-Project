@@ -1,6 +1,5 @@
 const Contact = require('../models/contactmodels');
-const Tour = require('../models/indiaTourmodel');
-const worldTour = require('../models/worldTourmodel');
+const Tour = require('../models/Tourmodel');
 
 exports.getabout = (req, res, next) => {
   // console.log("this is a second middleware");
@@ -12,10 +11,8 @@ exports.gettrip = async(req, res, next) => {
    console.log('this is getour page');
   try {
     const tours = await Tour.find().lean();
-    const worldtours = await worldTour.find().lean();
     console.log("Tours fetched from DB:", tours);
-    console.log("Tours fetched from DB:", worldtours);
-    res.render('trips', { tours, worldtours });
+    res.render('trips', { tours});
   } catch (err) {
     console.error("Error fetching tours:", err);
     res.status(500).send("Server Error");
@@ -55,10 +52,8 @@ exports.gethome = async(req, res, next) => {
   console.log('this is getour page');
   try {
     const tours = await Tour.find().lean();
-    const worldtours = await worldTour.find().lean();
     console.log("Tours fetched from DB:", tours);
-    console.log("Tours fetched from DB:", worldtours);
-    res.render('index', { tours, worldtours });
+    res.render('index', { tours });
   } catch (err) {
     console.error("Error fetching tours:", err);
     res.status(500).send("Server Error");
@@ -66,37 +61,32 @@ exports.gethome = async(req, res, next) => {
   // res.render('index');
 }
 
-// Home page for tour
-// exports.getTour = async (req, res) => {
-  // console.log('this is getour page');
-  // try {
-  //   const tours = await Tour.find().lean();
-  //   console.log("Tours fetched from DB:", tours);
-  //   res.render('trips', { tours });
-  // } catch (err) {
-  //   console.error("Error fetching tours:", err);
-  //   res.status(500).send("Server Error");
-  // };
-// };
 
 // // Tour detail by slug
 exports.getTourBySlug = async (req, res) => {
   try {
-    // const tour = await Tour.findOne({ slug: req.params.slug });
-    // console.log("Fetching tour with slug:", req.params.slug);
-    // if (!tour) return res.status(404).send('Tour not found');
-    // res.render('tour', { tour });
     const slug = req.params.slug;
     console.log("Fetching tour with slug:", slug);
     
-    const indiatour = await Tour.findOne({ slug }).lean();
-    const worldtours = await worldTour.findOne({ slug }).lean();
-
-    if (!indiatour && !worldtours) return res.status(404).send('Tour not found');
-    const tour = {...indiatour,...worldtours}
+    const tour = await Tour.findOne({ slug }).lean();
+    if (!tour) return res.status(404).send('Tour not found');
     res.render('tour-detail', { tour });
   } catch (error) {
     console.error("Error fetching tour by slug:", err);
     res.status(500).send("Server Error");
   }
 };
+
+exports.getTourByDetails = async(req,res) => {
+  try {
+    const name = req.params.name;
+    console.log("Fetching tour with slug:", name);
+    
+    const booking = await Tour.findOne({ name }).lean();
+    if (!booking) return res.status(404).send('Tour not found');
+    res.render('tour-booking', { booking });
+  } catch (error) {
+    console.error("Error fetching tour by slug:", err);
+    res.status(500).send("Server Error");
+  }
+}

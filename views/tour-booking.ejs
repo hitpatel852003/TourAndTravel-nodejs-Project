@@ -54,7 +54,7 @@
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="css/style.css">
 
-  <title>Tour Packages</title>
+  <title>Tour Details</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -228,7 +228,7 @@
     </div>
 
     <div class="card-container">
-      <% tour.packages.forEach(pkg=> { %>
+      <% booking.forEach(pkg=> { %>
         <div class="card">
           <img src="<%= pkg.image %>" alt="Ladakh Highlights">
           <div class="card-content">
@@ -239,7 +239,7 @@
               <%= pkg.name %>
             </div>
             <div class="package-subtitle">
-              <%= pkg.details %>
+              <!-- <%= pkg.details %> -->
             </div>
             <div class="tags">
               <div class="tag">🎁 Early Bird Offer</div>
@@ -248,7 +248,7 @@
             <div class="price price-button">
               <span class="new">₹<%= pkg.price %></span>
               <!-- <span class="old">₹ 20,650</span> -->
-                 <a href="/book-now/<%= pkg.name %>" class="book-btn">Book Now</a>
+                 <!-- <a href="/book-now/<%= pkg.id %>" class="book-btn">Book Now</a> -->
             </div>
           </div>
         </div>

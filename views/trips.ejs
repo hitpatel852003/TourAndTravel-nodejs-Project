@@ -1,43 +1,70 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
-    <title>Trips &mdash; Website Template by Colorlib</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <title>Trips &mdash; Website Template by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-    <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/aos.css">
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="css/style.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="css/style.css">
 
-  </head>
+  <style>
+    .image-wrapper {
+      width: 100%;
+      height: 250px;
+      /* Adjust height as needed */
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 10px;
+    }
 
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-    
-    <div class="site-wrap" id="home-section">
+    .listing-item {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
 
-      <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-          </div>
+    .listing-item:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+  <div class="site-wrap" id="home-section">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
         </div>
-        <div class="site-mobile-menu-body"></div>
       </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
 
-      <%- include('partials/header.ejs') %>
+    <%- include('partials/header.ejs') %>
       <!-- <header class="site-navbar site-navbar-target" role="banner">
 
         <div class="container">
@@ -75,39 +102,42 @@
 
       </header> -->
 
-    <div class="ftco-blocks-cover-1">
-      <div class="site-section-cover overlay" style="background-image: url('images/hero_1.jpg')">
-        <div class="container">
-          <div class="row align-items-center justify-content-center text-center">
-            <div class="col-md-5" data-aos="fade-up">
-              <h1 class="mb-3 text-white">Trips List</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
-              
+      <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" style="background-image: url('images/hero_1.jpg')">
+          <div class="container">
+            <div class="row align-items-center justify-content-center text-center">
+              <div class="col-md-5" data-aos="fade-up">
+                <h1 class="mb-3 text-white">Trips List</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque,
+                  maiores doloribus officia iste. Dolores.</p>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-   <div class="site-section">
+      <div class="site-section">
         <div class="container">
           <div class="row justify-content-center text-center">
             <div class="col-md-7">
               <div class="heading-39101 mb-5">
                 <span class="backdrop text-center">Journey</span>
                 <span class="subtitle-39191">Journey</span>
-                 <h3>India popular destinatione</h3>
+                <h3>India popular destinatione</h3>
               </div>
             </div>
           </div>
           <div class="row">
-            <% if (typeof tours !=='undefined' && tours.length> 0) { %>
-              <% tours.forEach(tour=> { %>
+            <% tours.forEach(tour=> { %>
+              <% if (tour.destination.toLowerCase()==='india' ) { %>
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                   <div class="listing-item">
                     <div class="listing-image">
-                      <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid">
+                      <div class="image-wrapper"> <img src="<%= tour.image %>" alt="<%= tour.title %>"
+                          class="img-fluid">
+                      </div>
                     </div>
                     <div class="listing-item-content">
                       <a class="px-3 mb-3 category bg-primary" href="/tours/<%= tour.slug %>">Package</a>
@@ -119,32 +149,32 @@
                     </div>
                   </div>
                 </div> <!-- ✅ Close this inside the loop -->
-                <% }) %>
-                  <% } else { %>
-                    <p>No tours available</p>
-                    <% } %>
+                <% } %>
+                  <% }) %>
           </div>
         </div>
       </div>
 
       <div class="site-section">
-      <div class="container">
-        <div class="row justify-content-center text-center">
-          <div class="col-md-7">
-            <div class="heading-39101 mb-5">
-              <span class="backdrop text-center">Journey</span>
-              <span class="subtitle-39191">Journey</span>
-              <h3>World popular destinatione</h3>
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            <div class="col-md-7">
+              <div class="heading-39101 mb-5">
+                <span class="backdrop text-center">Journey</span>
+                <span class="subtitle-39191">Journey</span>
+                <h3>World popular destinatione</h3>
+              </div>
             </div>
           </div>
-        </div>
           <div class="row">
-            <% if (typeof worldtours !=='undefined' && worldtours.length> 0) { %>
-              <% worldtours.forEach(tour=> { %>
+            <% tours.forEach(tour=> { %>
+              <% if (tour.destination.toLowerCase()==='world' ) { %>
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                   <div class="listing-item">
                     <div class="listing-image">
-                      <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid" he>
+                      <div class="image-wrapper">
+                        <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid" he>
+                      </div>
                     </div>
                     <div class="listing-item-content">
                       <a class="px-3 mb-3 category bg-primary" href="/tours/<%= tour.slug %>">Package</a>
@@ -156,38 +186,38 @@
                     </div>
                   </div>
                 </div> <!-- ✅ Close this inside the loop -->
-                <% }) %>
-                  <% } else { %>
-                    <p>No tours available</p>
-                    <% } %>
-          </div>
-      </div>
-    </div>
-
-
-    <div class="site-section py-5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <div class="heading-39101 mb-5">
-              <span class="backdrop">Story</span>
-              <span class="subtitle-39191">Discover Story</span>
-              <h3>Our Story</h3>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quae expedita fugiat quo incidunt, possimus temporibus aperiam eum, quaerat sapiente.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos debitis enim a pariatur molestiae.</p>
-          </div>
-          <div class="col-md-6" data-aos="fade-right">
-            <img src="images/traveler.jpg" alt="Image" class="img-fluid">
+                <% } %>
+                  <% }) %>
           </div>
         </div>
       </div>
-    </div>
 
 
-    
-    <%- include('partials/footer.ejs') %>
-    <!-- <footer class="site-footer bg-light">
+      <div class="site-section py-5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="heading-39101 mb-5">
+                <span class="backdrop">Story</span>
+                <span class="subtitle-39191">Discover Story</span>
+                <h3>Our Story</h3>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quae expedita fugiat quo incidunt,
+                possimus temporibus aperiam eum, quaerat sapiente.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos debitis enim a pariatur
+                molestiae.</p>
+            </div>
+            <div class="col-md-6" data-aos="fade-right">
+              <img src="images/traveler.jpg" alt="Image" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <%- include('partials/footer.ejs') %>
+        <!-- <footer class="site-footer bg-light">
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
@@ -252,26 +282,25 @@
       </div>
     </footer> -->
 
-    </div>
+  </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery-migrate-3.0.0.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/jquery.fancybox.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/aos.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.0.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/aos.js"></script>
 
-    <script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 
-  </body>
+</body>
 
 </html>
-

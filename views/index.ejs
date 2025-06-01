@@ -20,7 +20,33 @@
 
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .image-wrapper {
+      width: 100%;
+      height: 250px;
+      /* Adjust height as needed */
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 10px;
+    }
 
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .listing-item {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .listing-item:hover {
+      transform: translateY(-5px);
+    }
+  </style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -121,17 +147,19 @@
               <div class="heading-39101 mb-5">
                 <span class="backdrop text-center">Journey</span>
                 <span class="subtitle-39191">Journey</span>
-                 <h3>India popular destinatione</h3>
+                <h3>India popular destinatione</h3>
               </div>
             </div>
           </div>
           <div class="row">
-            <% if (typeof tours !=='undefined' && tours.length> 0) { %>
-              <% tours.forEach(tour=> { %>
+            <% tours.forEach(tour=> { %>
+              <% if (tour.destination.toLowerCase()==='india' ) { %>
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                   <div class="listing-item">
                     <div class="listing-image">
-                      <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid">
+                      <div class="image-wrapper">
+                        <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid">
+                      </div>
                     </div>
                     <div class="listing-item-content">
                       <a class="px-3 mb-3 category bg-primary" href="/tours/<%= tour.slug %>">Package</a>
@@ -143,34 +171,32 @@
                     </div>
                   </div>
                 </div> <!-- ✅ Close this inside the loop -->
-                <% }) %>
-                  <% } else { %>
-                    <p>No tours available</p>
-                    <% } %>
+                <% } %>
+                  <% }) %>
           </div>
-
-
         </div>
       </div>
 
-        <div class="site-section">
+      <div class="site-section">
         <div class="container">
           <div class="row justify-content-center text-center">
             <div class="col-md-7">
               <div class="heading-39101 mb-5">
                 <span class="backdrop text-center">Journey</span>
                 <span class="subtitle-39191">Journey</span>
-                 <h3>World popular destinatione</h3>
+                <h3>World popular destinatione</h3>
               </div>
             </div>
           </div>
           <div class="row">
-            <% if (typeof worldtours !=='undefined' && worldtours.length> 0) { %>
-              <% worldtours.forEach(tour=> { %>
+            <% tours.forEach(tour=> { %>
+              <% if (tour.destination.toLowerCase()==='world' ) { %>
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                   <div class="listing-item">
                     <div class="listing-image">
-                      <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid">
+                      <div class="image-wrapper">
+                        <img src="<%= tour.image %>" alt="<%= tour.title %>" class="img-fluid" he>
+                      </div>
                     </div>
                     <div class="listing-item-content">
                       <a class="px-3 mb-3 category bg-primary" href="/tours/<%= tour.slug %>">Package</a>
@@ -182,16 +208,11 @@
                     </div>
                   </div>
                 </div> <!-- ✅ Close this inside the loop -->
-                <% }) %>
-                  <% } else { %>
-                    <p>No tours available</p>
-                    <% } %>
+                <% } %>
+                  <% }) %>
           </div>
-
-
         </div>
       </div>
-
       <div class="site-section">
 
         <div class="container">

@@ -3,7 +3,7 @@ const userrouter = express.Router();
 const rootdir = require('../util/util');
 const path = require('path');
 
-const {getabout, gettrip, getblog, getcontact, postcontact, gethome, getTourBySlug} = require('../controller/usercontroller');
+const {getabout, gettrip, getblog, getcontact, postcontact, gethome, getTourBySlug, getTourByDetails} = require('../controller/usercontroller');
 
 userrouter.use((req,res,next) => {
   // console.log("first router",req.url,req.method);
@@ -28,5 +28,6 @@ userrouter.get("/", gethome);
 userrouter.get("/index", gethome);
 
 userrouter.get('/tours/:slug', getTourBySlug);
+userrouter.get('/book-now/:name', getTourByDetails);
 
 exports.userrouter = userrouter;
