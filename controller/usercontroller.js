@@ -78,15 +78,32 @@ exports.getTourBySlug = async (req, res) => {
 };
 
 exports.getTourByDetails = async(req,res) => {
-  try {
-    const name = req.params.name;
-    console.log("Fetching tour with slug:", name);
+  // try {
+  //   const num = req.params.num;
+  //   console.log('hit patel packeage is runnning');
+  //   console.log("Fetching tour with num:", num);
     
-    const booking = await Tour.findOne({ name }).lean();
-    if (!booking) return res.status(404).send('Tour not found');
-    res.render('tour-booking', { booking });
+  //   const booking = await Tour.findOne({ "packages.num": num }).lean();
+  //   console.log("Fetching tour with booking:", booking);
+  //   if (!booking) return res.status(404).send('Tour not found');
+  //   res.render('tour-booking', { booking });
+  // } catch (error) {
+  //   console.error("Error fetching tour by slug:", err);
+  //   res.status(500).send("Server Error");
+  // }
+
+  const { slug, num } = req.params;
+
+  try {
+    const tour = await Tour.findOne({ slug });
+    if (!tour) return res.status(404).send("Tour not found");
+
+    const selectedPackage = tour.packages.find(p => p.num == num);
+    if (!selectedPackage) return res.status(404).send("Package not found");
+
+    res.render('tour-booking', { tour, selectedPackage });
   } catch (error) {
-    console.error("Error fetching tour by slug:", err);
-    res.status(500).send("Server Error");
+    console.error("Error loading package details:", error);
+    res.status(500).send("Internal Server Error");
   }
 }

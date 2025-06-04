@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 app.use((req, res, next) => {
-  console.log(`🚀 ${req.method} request for ${req.url}`);
+  // console.log(`🚀 ${req.method} request for ${req.url}`);
   next();
 });
 
@@ -54,7 +54,8 @@ app.use(userrouter);
 
 // database connection
 const port = 3006;
-const DB_PATH = "mongodb+srv://root:root@nodejscoding.qyukqal.mongodb.net/TourAndTravel?retryWrites=true&w=majority&appName=tourandtravel"
+const DB_PATH = "mongodb+srv://root:root@tourandtravel.qyukqal.mongodb.net/TourAndTravel?retryWrites=true&w=majority&appName=tourandtravel"
+// const  DB_PATH = "mongodb+srv://root:root@nodejscoding.qyukqal.mongodb.net/?retryWrites=true&w=majority&appName=nodejscoding"
 
 mongoose.connect(DB_PATH).then(() => {
   app.listen(port, () => {

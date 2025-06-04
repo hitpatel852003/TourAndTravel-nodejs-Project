@@ -28,6 +28,6 @@ userrouter.get("/", gethome);
 userrouter.get("/index", gethome);
 
 userrouter.get('/tours/:slug', getTourBySlug);
-userrouter.get('/book-now/:name', getTourByDetails);
+userrouter.get('/tours/:slug/packages/:num', getTourByDetails);
 
 exports.userrouter = userrouter;

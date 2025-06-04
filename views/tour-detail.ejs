@@ -31,8 +31,6 @@
 </body>
 
 </html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,7 +61,32 @@
     }
 
     /* === Title Section === */
-    .section-title {
+
+    header {
+      background: linear-gradient(rgba(44, 62, 80, 0.6), rgba(44, 62, 80, 0.6)),
+        url('<%= tour.image %>') no-repeat center center/cover;
+      color: white;
+      padding: 60px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      /* text-align: center; */
+      height: 220px;
+      /* Increase height */
+    }
+
+    header h1 {
+      margin: 0px;
+      font-size: 3rem;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+
+    /* .section-title {
       position: relative;
       text-align: center;
       margin-top: 60px;
@@ -98,10 +121,10 @@
       position: relative;
       z-index: 1;
       margin-top: 5px;
-    }
+    } */
 
     /* === Card Grid Section === */
-    .card-container {
+    /* .card-container {
       display: flex;
       justify-content: center;
       gap: 30px;
@@ -193,67 +216,195 @@
     }
 
     .price-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
 
-.book-btn {
-  background-color: #f5a623;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.3s;
-}
+    .book-btn {
+      background-color: #f5a623;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
 
-.book-btn:hover {
-  background-color: #d48c1c;
-}
+    .book-btn:hover {
+      background-color: #d48c1c;
+    } */
 
+    .card {
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin: 20px;
+      display: inline-block;
+      vertical-align: top;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-body .description {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .card-body .price {
+      color: green;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tag.early {
+      background: #eaf3ff;
+      color: #007aff;
+      border: 1px solid #007aff;
+    }
+
+    .tag.save {
+      background: #e6ffe6;
+      color: #2e7d32;
+      border: 1px solid #2e7d32;
+    }
+
+    .btn {
+      background-color: #1f6fc9;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #d48c1c;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #d48c1c;
+    }
+
+    .brown {
+      color: slategray;
+    }
   </style>
+
 </head>
 
 <body>
-    <div class="section-title">
-      <div class="bg-text">Package</div>
-      <div class="sub-text">Package</div>
-      <div class="main-text">
-        <h3>
-          <%= tour.title %>
-        </h3>
-      </div>
+  <!-- <div class="section-title">
+    <div class="bg-text">Package</div>
+    <div class="sub-text">Package</div>
+    <div class="main-text">
+      <h3>
+        <%= tour.title %>
+      </h3>
     </div>
+  </div> -->
 
-    <div class="card-container">
-      <% tour.packages.forEach(pkg=> { %>
-        <div class="card">
-          <img src="<%= pkg.image %>" alt="Ladakh Highlights">
-          <div class="card-content">
-            <div class="duration">
-              <%= pkg.days %>
-            </div>
-            <div class="package-title">
-              <%= pkg.name %>
-            </div>
-            <div class="package-subtitle">
-              <%= pkg.details %>
-            </div>
-            <div class="tags">
-              <div class="tag">🎁 Early Bird Offer</div>
-              <div class="tag green">✅ Save 4,700</div>
-            </div>
-            <div class="price price-button">
-              <span class="new">₹<%= pkg.price %></span>
-              <!-- <span class="old">₹ 20,650</span> -->
-                 <a href="/book-now/<%= pkg.name %>" class="book-btn">Book Now</a>
-            </div>
+  <header>
+    <h1>
+      <%= tour.title %>
+    </h1>
+    <p>Choose your ideal vacation experience</p>
+  </header>
+
+  <!-- <div class="card-container">
+    <% tour.packages.forEach(pkg=> { %>
+      <div class="card">
+        <img src="<%= pkg.image %>" alt="Ladakh Highlights">
+        <div class="card-content">
+          <div class="duration">
+            <%= pkg.days %>
+          </div>
+          <div class="package-title">
+            <%= pkg.name %>
+          </div>
+          <div class="package-subtitle">
+            <%= pkg.details %>
+          </div>
+          <div class="tags">
+            <div class="tag">🎁 Early Bird Offer</div>
+            <div class="tag green">✅ Save 4,700</div>
+          </div>
+          <div class="price price-button">
+            <span class="new">₹<%= pkg.price %></span>
+            <a href="/tours/<%= tour.slug %>/packages/<%= pkg.num %>" class="btn">View Details</a>
           </div>
         </div>
-        <% }) %>
+      </div>
+      <% }) %>
+  </div> -->
+
+  <% tour.packages.forEach(pkg=> { %>
+    <div class="card">
+      <img src="<%= pkg.image %>" alt="Ubud Tour" class="card-img">
+      <div class="card-body">
+        <p class="description brown">
+          <%= pkg.days %>
+        </p>
+        <p class="description">
+            <h2>
+              <%= pkg.name %>
+            </h2>
+        </p>
+        <p class="description">
+          <%= pkg.details %>
+        </p>
+        <div class="tags">
+          <p class="tag">🎁 Early Bird Offer</p>
+          <p class="tag green">✅ Save 4,700</p>
+        </div>
+        <p class="price">₹<%= pkg.price %>
+        </p>
+        <a href="/tours/<%= tour.slug %>/packages/<%= pkg.num %>" class="btn">View Details</a>
+      </div>
     </div>
+    <% }) %>
+
 
       <script src="js/jquery-3.3.1.min.js"></script>
       <script src="js/jquery-migrate-3.0.0.js"></script>

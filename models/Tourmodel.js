@@ -8,6 +8,7 @@ const tourSchema = new mongoose.Schema({
   description: { type: String, required: true },
   packages: [
     {
+      num: { type: Number, required: true, unique: true },
       name: { type: String, required: true },
       days: { type: String, required: true },
       price: { type: Number, required: true },
@@ -18,7 +19,6 @@ const tourSchema = new mongoose.Schema({
           name: { type: String, required: true },
           days: { type: String, required: true },
           price: { type: Number, required: true },
-          
         }
       ]
     }
