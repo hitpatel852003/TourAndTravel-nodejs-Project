@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment Page</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <h1>Pay ₹3499 for Tour Package</h1>
+
+  <button id="payBtn">Pay Now</button>
+
+  <script>
+    const payBtn = document.getElementById("payBtn");
+
+    payBtn.addEventListener("click", async () => {
+      // 1. Create order on server
+      const response = await fetch("/payment/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "CSRF-Token": "<%= csrfToken %>"
+        },
+        body: JSON.stringify({}),
+      });
+
+      const data = await response.json();
+      const order = data.order;
+
+      // 2. Open Razorpay checkout
+      const options = {
+        key: "<%= keyId %>",
+        amount: order.amount,
+        currency: order.currency,
+        name: "Tour Booking",
+        description: "Tour Package Payment",
+        order_id: order.id,
+        handler: async function (response) {
+          // 3. Verify payment on server
+          const verifyRes = await fetch("/payment/verify-payment", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "CSRF-Token": "<%= csrfToken %>"
+            },
+            body: JSON.stringify(response),
+          });
+
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.status === "success") {
+            alert("Payment successful!");
+          } else {
+            alert("Payment verification failed!");
+          }
+        },
+        prefill: {
+          name: "",
+          email: "",
+          contact: "",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+        modal: {
+          escape: false,
+          ondismiss: function () {
+            alert("Payment popup closed.");
+          }
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    });
+  </script>
+</body>
+</html>

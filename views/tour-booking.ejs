@@ -1,30 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Package Details</title>
-</head>
-
-<body>
-  <h2>Package: <%= selectedPackage.name %>
-  </h2>
-  <img src="<%= selectedPackage.image %>" alt="<%= selectedPackage.name %>" width="400">
-  <p><strong>Days:</strong>
-    <%= selectedPackage.days %>
-  </p>
-  <p><strong>Price:</strong> ₹<%= selectedPackage.price %>
-  </p>
-  <p><strong>Details:</strong>
-    <%= selectedPackage.details %>
-  </p>
-
-  <a href="/book/<%= selectedPackage.num %>">Book Now</a>
-</body>
-
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,6 +15,7 @@
     body {
       background: #f4f4f6;
       padding: 40px;
+      margin: 0;
       font-family: sans-serif;
     }
 
@@ -70,9 +44,9 @@
 
     /* Right side 2x2 grid */
     .side-grid {
-      flex: 3;
+      flex: 2;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 12px;
     }
@@ -89,7 +63,7 @@
       display: block;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
       .photo-grid {
         flex-direction: column;
         height: auto;
@@ -102,41 +76,944 @@
       }
 
       .side-grid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .package-container {
+      max-width: 910px;
+      margin-left: 120px;
+      /* Aligned to left */
+    }
+
+    .package-header {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .duration {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .from {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      font-size: 14px;
+      background: white;
+      cursor: default;
+    }
+
+    .share {
+      margin-left: auto;
+    }
+
+    .tag img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .package-features {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .feature img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .stay-container {
+      max-width: 910px;
+      margin-left: 120px;
+    }
+
+    .stay-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .stay-card h3 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .tab {
+      padding: 10px 18px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .tab.active {
+      color: red;
+      border-color: red;
+      background: #ffeaea;
+      font-weight: 600;
+    }
+
+    .hotel-box {
+      display: flex;
+      background: #f3f3f5;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .hotel-image {
+      width: 45%;
+      position: relative;
+    }
+
+    .hotel-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: white;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .hotel-info {
+      padding: 16px;
+      width: 55%;
+    }
+
+    .hotel-info h4 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    .hotel-info .rating {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .features {
+      font-size: 14px;
+    }
+
+    .features div {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .features img {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* new start */
+    .itinerary-container {
+      max-width: 910px;
+      margin-left: 120px;
+      background: white;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .itinerary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .itinerary-header h3 {
+      margin: 0;
+    }
+
+    .expand-btn {
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      background: #f4f4f4;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .day-card {
+      background: #f3f3f5;
+      padding: 14px 20px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .day-label {
+      background: #aaa;
+      color: white;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    .day-title {
+      font-weight: 500;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .arrow.rotate {
+      transform: rotate(180deg);
+    }
+
+    .day-details {
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .day-card.active .day-details {
+      display: block;
+    }
+
+    .day-card.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* new start */
+    .inclusions-box {
+      background: white;
+      padding: 24px 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+      max-width: 910px;
+      margin-left: 120px;
+    }
+
+    .inclusions-box h3 {
+      margin-bottom: 20px;
+    }
+
+    .inclusions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 40px;
+    }
+
+    .inclusion-item {
+      display: flex;
+      align-items: start;
+      font-size: 15px;
+      color: #222;
+    }
+
+    .inclusion-item span {
+      color: green;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .icon span {
+      color: red;
+    }
+
+    @media (max-width: 600px) {
+      .inclusions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* new start */
+    .tour-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 910px;
+      margin-left: 120px;
+    }
+
+    .tour-sidebar-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .tour-price-card h3 {
+      margin: 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .tour-price-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .tour-price-amount h2 {
+      margin: 4px 0;
+      color: #000;
+      font-size: 28px;
+    }
+
+    .tour-old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 16px;
+    }
+
+    .tour-per-person {
+      font-size: 14px;
+      color: #555;
+      margin-top: -6px;
+    }
+
+    .tour-package-info {
+      font-size: 14px;
+      text-align: center;
+      color: #555;
+    }
+
+    .tour-package-info strong {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .tour-btn-enquiry {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #d48c1c;
+      /* Customize the background color */
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      width: 100%;
+      text-align: center;
+    }
+
+    .tour-btn-enquiry:hover {
+      background-color: #d48c1c;
+      transform: translateY(-2px);
+    }
+
+    .tour-btn-enquiry:active {
+      transform: translateY(0);
+    }
+
+
+    /* Expert Support */
+    .tour-expert-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .tour-expert-card p {
+      font-size: 14px;
+      margin: 0;
+      color: #444;
+    }
+
+    .tour-expert-card strong {
+      color: #000;
+    }
+
+    .tour-whatsapp-button {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 500;
+      color: #1ebea5;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .tour-whatsapp-button img {
+      width: 20px;
+      margin-right: 8px;
+    }
+
+
+    /* new start */
+
+    .attractions-container {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      max-width: 910px;
+      margin: auto;
+    }
+
+    .attractions-container h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      width: calc(25% - 15px);
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      display: none;
+      /* Hidden by default */
+    }
+
+    .card.visible {
+      display: block;
+    }
+
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+
+    .card-body {
+      padding: 12px;
+    }
+
+    .card-body h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-body p {
+      margin: 4px 0 0;
+      color: #555;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .load-more {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .load-more button {
+      padding: 10px 24px;
+      border: 1px solid #aaa;
+      background: #fff;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .load-more button:hover {
+      background-color: #f0f0f0;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        width: calc(50% - 10px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        width: 100%;
+      }
+    }
+
+    /* ===== Responsive Enhancements ===== */
+
+    @media (max-width: 992px) {
+      body {
+        padding: 20px;
+      }
+
+      .photo-grid {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+      }
+
+      .package-container,
+      .stay-container,
+      .inclusions-box,
+      .itinerary-container,
+      .tour-sidebar,
+      .attractions-container {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
+        max-width: 100%;
+      }
+
+      .side-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .package-features {
+        grid-template-columns: 1fr;
+      }
+
+      .hotel-box {
+        flex-direction: column;
+      }
+
+      .hotel-image,
+      .hotel-info {
+        width: 100%;
+      }
+
+      .tags {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .title {
+        font-size: clamp(20px, 4vw, 24px);
+      }
+
+      .from,
+      .feature,
+      .tour-package-info {
+        font-size: clamp(12px, 3vw, 15px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tab {
+        font-size: 13px;
+        padding: 8px 14px;
+      }
+
+      .day-title {
+        font-size: 14px;
+      }
+
+      .inclusions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-btn-enquiry {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .card {
+        width: 100% !important;
+      }
+
+      .cards {
+        gap: 14px;
+      }
+
+      .attractions-container h2 {
+        font-size: 18px;
+      }
+
+      .card-body h4 {
+        font-size: 14px;
+      }
+
+      .card-body p {
+        font-size: 12px;
       }
     }
   </style>
 </head>
 
 <body>
-  <!DOCTYPE html>
-  <html lang="en">
+  <div class="photo-grid">
+    <div class="side-grid">
+      <div><img src="<%= bookingDetails.image2 %>" alt="Image 1"></div>
+      <div><img src="<%= bookingDetails.image3 %>" alt="Image 2"></div>
+      <div><img src="<%= bookingDetails.image4 %>" alt="Image 3"></div>
+      <div><img src="<%= bookingDetails.image5 %>" alt="Image 4"></div>
+    </div>
+    <div class="main-image">
+      <img src="<%= bookingDetails.image1 %>" alt="Main Location">
+    </div>
+  </div>
+  <br>
+  <div class="package-container">
+    <div class="package-header">
+      <p class="duration">
+        <%= bookingDetails.days %>
+      </p>
+      <h2 class="title">
+        <%= bookingDetails.title %>
+      </h2>
+      <p class="from">
+        <%= bookingDetails.description %>
+      </p>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Grid Component</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-
-  <body>
-    <div class="photo-grid">
-      <div class="side-grid">
-        <div><img src="/images/goa.jpg" alt="Image 1"></div>
-        <div><img src="/images/goa.jpg" alt="Image 2"></div>
-        <div><img src="/images/goa.jpg" alt="Image 3"></div>
-        <div><img src="/images/goa.jpg" alt="Image 4"></div>
-        <div><img src="/images/goa.jpg" alt="Image 5"></div>
-        <div><img src="/images/goa.jpg" alt="Image 6"></div>
-      </div>
-       <div class="main-image">
-        <img src="/images/goa.jpg" alt="Main Location">
+      <div class="tags">
+        <span class="tag"><img src="icons/tour.png" alt=""> Private Tour</span>
+        <span class="tag"><img src="icons/family.png" alt=""> Family Special</span>
+        <span class="tag share"><img src="icons/share.png" alt=""> Share</span>
       </div>
     </div>
-  </body>
 
-  </html>
+    <div class="package-features">
+      <div class="feature"><img src="icons/bus.png" alt=""> <strong>
+          <%= bookingDetails.Travelling %>
+        </strong> </div>
+      <div class="feature"><img src="icons/food.png" alt=""> <strong>
+          <%= bookingDetails.BreakfastandDinner %>
+        </strong></div>
+      <div class="feature"><img src="icons/hotel.png" alt=""> <strong>
+          <%= bookingDetails.Stay %>
+        </strong></div>
+      <div class="feature"><img src="icons/binoculars.png" alt=""> <strong>
+          <%= bookingDetails.Sightseeing %>
+        </strong></div>
+        <div class="feature"><img src="icons/binoculars.png" alt=""> <strong>
+          <%= bookingDetails.AirportTransfer %>
+        </strong></div>
+      </div>
+  </div>
+  </div>
+  <br>
+  <div class="stay-container">
+    <div class="stay-card">
+      <h3>Stay Details</h3>
 
+      <!-- <div class="tabs">
+          <div class="tab active">Shimla (2N)</div>
+          <div class="tab">Manali (3N)</div>
+        </div> -->
+      <br>
+      <div class="hotel-box">
+        <div class="hotel-image">
+          <img src="https://i.imgur.com/fxJHkE5.jpg" alt="Hotel Image" />
+          <div class="gallery-btn"> <a href="#">📷 Gallery</a></div>
+        </div>
+        <div class="hotel-info">
+          <h4>
+            <%= bookingDetails.hotaltitle %>
+          </h4>
+          <div class="rating">
+            <%= bookingDetails.hotalstar %> ★ Hotel
+          </div>
+          <div class="features">
+            <div><img src="https://img.icons8.com/ios-filled/50/bed.png" alt="">
+              <%= bookingDetails.hotalroom %>
+            </div>
+            <div><img src="https://img.icons8.com/ios-filled/50/meal.png" alt="">
+              <%= selectedPackage.BreakfastandDinner %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="itinerary-container">
+    <div class="itinerary-header">
+      <h3>Itinerary</h3>
+      <button class="expand-btn" onclick="toggleAll()">🔁 Expand All</button>
+    </div>
+
+    <!-- Day Items -->
+    <% if(bookingDetails) { %>
+      <% bookingDetails.itinerary.forEach(details=> { %>
+        <div class="day-card">
+          <div class="day-header" onclick="toggleItem(this)">
+            <div class="day-title">
+              <span class="day-label">
+                <%= details.itineraryday %>
+              </span>
+              <%= details.itinerarytitle %>
+            </div>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="day-details">
+            <%= details.itinerarydescription %>
+          </div>
+        </div>
+        <% }) %>
+          <% } else { %>
+            <p>data is not found</p>
+            <% } %>
+  </div>
+  </div>
+  <br>
+  <div class="inclusions-box">
+    <h3>Inclusions</h3>
+    <div class="inclusions-grid">
+      <% if (bookingDetails) { %>
+        <% bookingDetails.Inclusions.forEach(details=> { %>
+          <div class="inclusion-item"><span>✔</span>
+            <%= details.Inclusionstitle %>
+          </div>
+          <% }) %>
+            <% } else { %>
+              <p>data is not found</p>
+              <% } %>
+    </div>
+  </div>
+  <br>
+  <div class="inclusions-box">
+    <h3>Exclusions</h3>
+    <div class="inclusions-grid">
+      <% if (bookingDetails) { %>
+        <% bookingDetails.Exclusions.forEach(details=> { %>
+          <div class="inclusion-item icon"><span>✖</span>
+            <%= details.Exclusionstitle %>
+          </div>
+          <% }) %>
+            <% } else { %>
+              <p>data is not found</p>
+              <% } %>
+    </div>
+  </div>
+  <br>
+  <div class="tour-sidebar">
+    <!-- Pricing Card -->
+    <div class="tour-sidebar-card tour-price-card">
+      <h3>Starting from</h3>
+      <div class="tour-price-amount">
+        <h2>
+          <%= bookingDetails.newprice %>
+        </h2>
+        <span class="tour-old-price">
+          <%= bookingDetails.oldprice %>
+        </span>
+      </div>
+      <p class="tour-per-person">per person</p>
+      <hr>
+      <br>
+      <div class="tour-package-info">
+        <strong>
+          <%= bookingDetails.days %>
+        </strong>
+      </div>
+      <br>
+      <a href="/payment" class="tour-btn-enquiry">Send Enquiry</a>
+    </div>
+
+    <!-- Expert Support Card -->
+    <div class="tour-sidebar-card tour-expert-card">
+      <h3>Still Got Queries?</h3>
+      <p>Have your queries answered by<br>
+        <strong>Avian's Destination Experts</strong>
+      </p>
+      <div class="tour-whatsapp-button">
+        <a href="/enquiry/Bali%20Adventure" class="tour-btn-enquiry" target="_blank">
+          Connect with WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="attraction">
+    <div class="attractions-container">
+      <h2>Attractions & Activities</h2>
+      <div class="cards" id="cardsContainer">
+        <% if (bookingDetails) { %>
+          <% bookingDetails.AttractionsAndActivities.forEach(details=> { %>
+            <div class="card visible">
+              <img src="<%= details.AAimage %>" alt="Shimla">
+              <div class="card-body">
+                <h4><%= details.AAtitle %></h4>
+                <p><%= details.AAdescription %></p>
+              </div>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <p>data is not found</p>
+                <% } %>
+                  <!-- <div class="card visible">
+                    <img src="/images/goa.jpg" alt="Atal Tunnel">
+                    <div class="card-body">
+                      <h4>Atal Tunnel</h4>
+                      <p>World’s Longest Single Tube Hi...</p>
+                    </div>
+                  </div> -->
+                  <!-- <div class="card visible">
+                    <img src="/images/goa.jpg" alt="Sissu">
+                    <div class="card-body">
+                      <h4>Sissu</h4>
+                      <p>The Hidden Gem of Lahaul...</p>
+                    </div>
+                  </div> -->
+                  <!-- <div class="card visible">
+                    <img src="/images/goa.jpg" alt="Solang Valley">
+                    <div class="card-body">
+                      <h4>Solang Valley</h4>
+                      <p>Manali’s Hub for Snow Sports</p>
+                    </div>
+                  </div> -->
+
+
+                  <!-- <div class="card">
+                    <img src="/images/goa.jpg" alt="Rohtang Pass">
+                    <div class="card-body">
+                      <h4>Rohtang Pass</h4>
+                      <p>Gateway to Lahaul & Spiti</p>
+                    </div>
+                  </div> -->
+                  <!-- <div class="card">
+                    <img src="/images/goa.jpg" alt="Manikaran">
+                    <div class="card-body">
+                      <h4>Manikaran</h4>
+                      <p>Hot Springs & Pilgrimage Spot</p>
+                    </div>
+                  </div> -->
+                  <!-- <div class="card">
+                    <img src="/images/goa.jpg" alt="Kasol">
+                    <div class="card-body">
+                      <h4>Kasol</h4>
+                      <p>Mini Israel of India</p>
+                    </div>
+                  </div> -->
+                  <!-- <div class="card">
+                    <img src="/images/goa.jpg" alt="Naggar Castle">
+                    <div class="card-body">
+                      <h4>Naggar Castle</h4>
+                      <p>Heritage Building in Kullu</p>
+                    </div>
+                  </div> -->
+      </div>
+
+      <div class="load-more">
+        <button onclick="loadMore()">Load More</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    function toggleItem(header) {
+      const card = header.parentElement;
+      card.classList.toggle('active');
+    }
+
+    function toggleAll() {
+      const allCards = document.querySelectorAll('.day-card');
+      const allActive = [...allCards].every(card => card.classList.contains('active'));
+
+      allCards.forEach(card => {
+        if (allActive) {
+          card.classList.remove('active');
+        } else {
+          card.classList.add('active');
+        }
+      });
+    }
+
+    let currentIndex = 4; // 4 cards shown initially
+    const cards = document.querySelectorAll(".card");
+
+    function loadMore() {
+      let revealed = 0;
+      for (let i = currentIndex; i < cards.length && revealed < 4; i++) {
+        cards[i].classList.add("visible");
+        revealed++;
+        currentIndex++;
+      }
+      if (currentIndex >= cards.length) {
+        document.querySelector(".load-more button").style.display = "none";
+      }
+    }
+  </script>
 
 </body>
 

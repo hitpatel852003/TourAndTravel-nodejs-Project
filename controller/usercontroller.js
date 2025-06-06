@@ -7,12 +7,12 @@ exports.getabout = (req, res, next) => {
   res.render('about')
 }
 
-exports.gettrip = async(req, res, next) => {
-   console.log('this is getour page');
+exports.gettrip = async (req, res, next) => {
+  console.log('this is getour page');
   try {
     const tours = await Tour.find().lean();
     console.log("Tours fetched from DB:", tours);
-    res.render('trips', { tours});
+    res.render('trips', { tours });
   } catch (err) {
     console.error("Error fetching tours:", err);
     res.status(500).send("Server Error");
@@ -26,29 +26,29 @@ exports.getblog = (req, res, next) => {
   res.render('blog')
 }
 
-exports.getcontact = async(req, res, next) =>{
+exports.getcontact = async (req, res, next) => {
   try {
     const contact = await Contact.find();
-    console.log("fetch the contact data",contact);
-    res.render('contact', {contact});
+    console.log("fetch the contact data", contact);
+    res.render('contact', { contact });
   } catch (error) {
-     console.error("Error fetching tours:", err);
+    console.error("Error fetching tours:", err);
     res.status(500).send("Server Error");
   }
 }
 
-exports.postcontact = async(req, res, next) => {
+exports.postcontact = async (req, res, next) => {
 
-  const {firstname, lastname, email, message} = req.body;
-    const home = new Contact({firstname, lastname, email, message});
-    home.save().then(() => {
-      console.log("home save successfully");
-    })
-    res.redirect("/contact");
+  const { firstname, lastname, email, message } = req.body;
+  const home = new Contact({ firstname, lastname, email, message });
+  home.save().then(() => {
+    console.log("home save successfully");
+  })
+  res.redirect("/contact");
 
 }
 
-exports.gethome = async(req, res, next) => {
+exports.gethome = async (req, res, next) => {
   console.log('this is getour page');
   try {
     const tours = await Tour.find().lean();
@@ -67,7 +67,7 @@ exports.getTourBySlug = async (req, res) => {
   try {
     const slug = req.params.slug;
     console.log("Fetching tour with slug:", slug);
-    
+
     const tour = await Tour.findOne({ slug }).lean();
     if (!tour) return res.status(404).send('Tour not found');
     res.render('tour-detail', { tour });
@@ -77,12 +77,12 @@ exports.getTourBySlug = async (req, res) => {
   }
 };
 
-exports.getTourByDetails = async(req,res) => {
+exports.getTourByDetails = async (req, res) => {
   // try {
   //   const num = req.params.num;
   //   console.log('hit patel packeage is runnning');
   //   console.log("Fetching tour with num:", num);
-    
+
   //   const booking = await Tour.findOne({ "packages.num": num }).lean();
   //   console.log("Fetching tour with booking:", booking);
   //   if (!booking) return res.status(404).send('Tour not found');
@@ -92,18 +92,35 @@ exports.getTourByDetails = async(req,res) => {
   //   res.status(500).send("Server Error");
   // }
 
+  // controller code (usercontroller.js)
   const { slug, num } = req.params;
 
   try {
     const tour = await Tour.findOne({ slug });
+
     if (!tour) return res.status(404).send("Tour not found");
 
     const selectedPackage = tour.packages.find(p => p.num == num);
+
     if (!selectedPackage) return res.status(404).send("Package not found");
 
-    res.render('tour-booking', { tour, selectedPackage });
+    const bookingDetails = selectedPackage.booking[0]; // Assuming there's only one object in the array
+
+    res.render('tour-booking', { tour, selectedPackage, bookingDetails });
+
   } catch (error) {
     console.error("Error loading package details:", error);
     res.status(500).send("Internal Server Error");
   }
+
 }
+
+exports.sendEnquiry = (req, res) => {
+  const tourName = req.params.tourName;
+  const message = `Hi, I'm interested in the ${tourName} tour package.`;
+  const phoneNumber = '916351291232'; // Replace with your WhatsApp number
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  // Redirect to WhatsApp chat
+  res.redirect(whatsappUrl);
+};

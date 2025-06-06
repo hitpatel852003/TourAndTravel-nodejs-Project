@@ -4,7 +4,6 @@ const path = require('path');
 const { default: mongoose } = require('mongoose');
 
 const {userrouter} = require('./router/userrouter');
-// const tourRoutes = require('./router/tourRoutes');
 const Newsletter  = require('./models/footeremailmodels');
 
 app.use(express.urlencoded({ extended: true })); // ✅ handles form submissions
@@ -46,16 +45,53 @@ app.post('/newsletter', async (req, res) => {
 });
 
 
+//this all is payment method
+require("dotenv").config();
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const cookieParser = require("cookie-parser");
+const csurf = require("csurf");
+const paymentRoutes = require("./router/paymentRoutes");
+
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try later.",
+});
+app.use(limiter);
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+
+const csrfProtection = csurf({ cookie: true });
+app.use(csrfProtection);
+
+app.set("view engine", "ejs");
+
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use("/payment", paymentRoutes);
+
+app.use((err, req, res, next) => {
+  if (err.code === "EBADCSRFTOKEN") {
+    res.status(403).send("Form tampered with");
+  } else {
+    next(err);
+  }
+});
+
 //user router
 app.use(userrouter);
-//tour router
-// app.use('/', tourRoutes);
-
 
 // database connection
-const port = 3006;
+const port = process.env.port || 3006;
 const DB_PATH = "mongodb+srv://root:root@tourandtravel.qyukqal.mongodb.net/TourAndTravel?retryWrites=true&w=majority&appName=tourandtravel"
-// const  DB_PATH = "mongodb+srv://root:root@nodejscoding.qyukqal.mongodb.net/?retryWrites=true&w=majority&appName=nodejscoding"
 
 mongoose.connect(DB_PATH).then(() => {
   app.listen(port, () => {
